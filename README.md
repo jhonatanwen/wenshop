@@ -63,25 +63,6 @@ npm install
 npm run dev
 ```
 
-## 🎯 Funcionalidades
-
-### 🏠 Rotas Principais
-
-- **Home** (`/`) - Página inicial com produtos em destaque
-- **Produtos** (`/products`) - Catálogo completo de produtos
-- **Produto** (`/products/[id]`) - Detalhes do produto individual
-- **Lista de Desejos**(`/wishlist`) - Gerenciamento da lista de desejos _(a implementar)_
-- **Carrinho** (`/cart`) - Gerenciamento do carrinho de compras
-- **Login** (`/login`) - Autenticação de usuários
-- **Registro** (`/register`) - Cadastro de novos usuários
-- **Perfil** (`/profile`) - Área do usuário logado
-
-## 🔒 Segurança
-
-- **XSS Protection** - Sanitização automática do React
-- **CSRF Protection** - Tokens de autenticação seguros
-- **Content Security Policy** - Headers de segurança
-
 ---
 
 ⭐ WenShop e o [WenShop-API](https://github.com/jhonatanwen/wenshop-api) são projetos para meu portfólio **se esses projetos foram interessantes para você, deixe uma estrela!**
