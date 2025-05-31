@@ -54,7 +54,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto text-center text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Descubra o Futuro da
-              <span className="block bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent pb-1">
                 Tecnologia
               </span>
             </h1>
