@@ -1,14 +1,13 @@
 "use client";
 
 import {
-  ArrowRightIcon,
   CloseIcon,
   MenuIcon,
-  SearchIcon,
   ShoppingCartIcon,
   ThunderboltIcon,
   UserIcon,
 } from "@/components/icons";
+import { SearchDropdown } from "@/components/SearchDropdown";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { useIsClient } from "@/hooks/useIsClient";
@@ -20,19 +19,10 @@ const Header: React.FC = () => {
   const { items } = useCart();
   const isClient = useIsClient();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const itemCount = isClient
     ? items.reduce((count, item) => count + item.quantity, 0)
     : 0;
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      // TODO: Implementar lógica de pesquisa
-      console.log("Pesquisando por:", searchQuery);
-    }
-  };
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-soft border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
@@ -48,28 +38,8 @@ const Header: React.FC = () => {
             </span>
           </Link>
 
-          {/* Barra de pesquisa centralizada - Desktop */}
           <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-            <form onSubmit={handleSearch} className="w-full relative">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Pesquisar produtos..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-12 pl-12 pr-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-                />
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <SearchIcon className="h-5 w-5 text-gray-400" />
-                </div>
-                <button
-                  type="submit"
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-primary-500 transition-colors"
-                >
-                  <ArrowRightIcon className="h-5 w-5" />
-                </button>
-              </div>
-            </form>
+            <SearchDropdown onClose={() => setMobileMenuOpen(false)} />
           </div>
 
           {/* Área de ações - Login/Cadastro ou User + Carrinho */}
@@ -142,23 +112,11 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Barra de pesquisa mobile */}
         <div className="md:hidden pb-4">
-          <form onSubmit={handleSearch} className="relative">
-            <input
-              type="text"
-              placeholder="Pesquisar produtos..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
-            />
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <SearchIcon className="h-4 w-4 text-gray-400" />
-            </div>
-          </form>
+          <SearchDropdown onClose={() => setMobileMenuOpen(false)} />
         </div>
 
-        {/* Menu mobile expandido */}
+        {/* Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-200 dark:border-gray-700 py-4 space-y-1">
             <Link

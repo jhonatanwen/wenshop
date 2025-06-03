@@ -32,10 +32,37 @@ api.interceptors.request.use(
 );
 
 export const productService = {
-  getAll: async (): Promise<Product[]> => {
+  getAll: async (params?: {
+    search?: string;
+    category?: string;
+    limit?: number;
+    sortBy?: string;
+    order?: "asc" | "desc";
+  }): Promise<Product[]> => {
     try {
-      const response = await api.get("/products");
-      return response.data.data; // A API retorna { success: true, data: [...] }
+      const searchParams = new URLSearchParams();
+
+      if (params?.search?.trim()) {
+        searchParams.append("search", params.search.trim());
+      }
+      if (params?.category?.trim()) {
+        searchParams.append("category", params.category.trim());
+      }
+      if (params?.limit && params.limit > 0) {
+        searchParams.append("limit", params.limit.toString());
+      }
+      if (params?.sortBy?.trim()) {
+        searchParams.append("sortBy", params.sortBy.trim());
+      }
+      if (params?.order) {
+        searchParams.append("order", params.order);
+      }
+
+      const queryString = searchParams.toString();
+      const url = `/products${queryString ? `?${queryString}` : ""}`;
+
+      const response = await api.get(url);
+      return response.data.data || [];
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
       return [];
