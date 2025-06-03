@@ -19,7 +19,6 @@ import {
 import Link from "next/link";
 import React from "react";
 
-// Componente moderno de rodapé
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 dark:bg-black text-white">

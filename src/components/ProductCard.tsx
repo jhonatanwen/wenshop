@@ -4,13 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-// Props para o componente ProductCard
 interface ProductCardProps {
   product: Product;
   onAddToCart: (productId: number) => void;
 }
 
-// Componente moderno de card de produto
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   return (
     <div className="group bg-white dark:bg-gray-800 rounded-2xl shadow-soft overflow-hidden transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-2 border border-gray-100 dark:border-gray-700">

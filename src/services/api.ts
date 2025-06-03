@@ -7,10 +7,8 @@ import {
   User,
 } from "../types";
 
-// URL base da API - usa variável de ambiente ou fallback para localhost
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
-// Criando uma instância do axios com configurações padrão
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -18,7 +16,6 @@ const api = axios.create({
   },
 });
 
-// Interceptor para adicionar o token de autenticação em todas as requisições
 api.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
@@ -34,9 +31,7 @@ api.interceptors.request.use(
   }
 );
 
-// Serviço para produtos
 export const productService = {
-  // Buscar todos os produtos
   getAll: async (): Promise<Product[]> => {
     try {
       const response = await api.get("/products");
@@ -47,7 +42,6 @@ export const productService = {
     }
   },
 
-  // Buscar um produto pelo ID
   getById: async (id: number): Promise<Product | null> => {
     try {
       const response = await api.get(`/products/${id}`);
@@ -58,7 +52,6 @@ export const productService = {
     }
   },
 
-  // Buscar produtos em destaque
   getFeatured: async (): Promise<Product[]> => {
     try {
       const response = await api.get("/products/featured/list");
@@ -70,9 +63,7 @@ export const productService = {
   },
 };
 
-// Serviço para autenticação
 export const authService = {
-  // Login de usuário
   login: async (credentials: LoginCredentials): Promise<User | null> => {
     try {
       const response = await api
@@ -105,7 +96,6 @@ export const authService = {
     }
   },
 
-  // Registro de usuário
   register: async (data: RegisterData): Promise<User | null> => {
     try {
       const response = await api.post("/auth/register", data);
@@ -121,7 +111,6 @@ export const authService = {
     }
   },
 
-  // Logout de usuário
   logout: (): void => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
@@ -129,13 +118,11 @@ export const authService = {
     }
   },
 
-  // Verificar se o usuário está autenticado
   isAuthenticated: (): boolean => {
     if (typeof window === "undefined") return false;
     return !!localStorage.getItem("token");
   },
 
-  // Obter o usuário atual
   getCurrentUser: (): User | null => {
     if (typeof window === "undefined") return null;
     const user = localStorage.getItem("user");
@@ -143,16 +130,13 @@ export const authService = {
   },
 };
 
-// Serviço para o carrinho de compras
 export const cartService = {
-  // Obter itens do carrinho
   getItems: (): CartItem[] => {
     if (typeof window === "undefined") return [];
     const cartItems = localStorage.getItem("cartItems");
     return cartItems ? JSON.parse(cartItems) : [];
   },
 
-  // Adicionar item ao carrinho
   addItem: async (productId: number, quantity: number = 1): Promise<void> => {
     if (typeof window === "undefined") return;
 
@@ -166,7 +150,6 @@ export const cartService = {
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      // Gera um ID mais determinístico baseado no productId
       const newId = productId * 1000 + cartItems.length;
       cartItems.push({
         id: newId,
@@ -179,7 +162,6 @@ export const cartService = {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   },
 
-  // Remover item do carrinho
   removeItem: (id: number): void => {
     if (typeof window === "undefined") return;
 
@@ -188,7 +170,6 @@ export const cartService = {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   },
 
-  // Atualizar quantidade de um item
   updateQuantity: (id: number, quantity: number): void => {
     if (typeof window === "undefined") return;
 
@@ -206,7 +187,6 @@ export const cartService = {
     }
   },
 
-  // Calcular o total do carrinho
   getTotal: (): number => {
     const cartItems = cartService.getItems();
     return cartItems.reduce(
@@ -215,7 +195,6 @@ export const cartService = {
     );
   },
 
-  // Limpar o carrinho
   clearCart: (): void => {
     localStorage.removeItem("cartItems");
   },

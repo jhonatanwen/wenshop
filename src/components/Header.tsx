@@ -15,7 +15,6 @@ import { useIsClient } from "@/hooks/useIsClient";
 import Link from "next/link";
 import React, { useState } from "react";
 
-// Componente de cabeçalho moderno e responsivo
 const Header: React.FC = () => {
   const { authState, logout } = useAuth();
   const { items } = useCart();
@@ -23,7 +22,6 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Calcula o número total de itens no carrinho apenas no cliente
   const itemCount = isClient
     ? items.reduce((count, item) => count + item.quantity, 0)
     : 0;

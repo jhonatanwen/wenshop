@@ -26,7 +26,6 @@ export function useHydrated() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    // Aguarda o próximo tick para garantir que a hidratação terminou
     const timer = setTimeout(() => setHydrated(true), 0);
     return () => clearTimeout(timer);
   }, []);

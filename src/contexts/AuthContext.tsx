@@ -10,7 +10,6 @@ import React, {
   useState,
 } from "react";
 
-// Criando o contexto de autenticação com um valor inicial
 const AuthContext = createContext<{
   authState: AuthState;
   login: (email: string, password: string) => Promise<boolean>;
@@ -28,17 +27,13 @@ const AuthContext = createContext<{
   logout: () => {},
 });
 
-// Hook personalizado para usar o contexto de autenticação
 export const useAuth = () => useContext(AuthContext);
 
-// Provedor do contexto de autenticação
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  // Estado para controlar se o componente está montado no cliente
   const [mounted, setMounted] = useState(false);
 
-  // Estado para armazenar informações de autenticação
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
     isAuthenticated: false,
@@ -46,18 +41,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     error: null,
   });
 
-  // Efeito para marcar como montado
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Efeito para verificar se o usuário já está autenticado ao carregar a página
   useEffect(() => {
     if (!mounted) return;
 
     const checkAuth = () => {
       try {
-        // Verifica se há um token no localStorage
         if (authService.isAuthenticated()) {
           const user = authService.getCurrentUser();
           setAuthState({
@@ -85,11 +77,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
     };
 
-    // Aguarda um frame para garantir que a hidratação terminou
     requestAnimationFrame(checkAuth);
   }, [mounted]);
 
-  // Função para realizar login
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       setAuthState((prev) => ({ ...prev, loading: true, error: null }));
@@ -122,7 +112,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  // Função para realizar registro
   const register = async (
     name: string,
     email: string,
@@ -159,7 +148,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  // Função para realizar logout
   const logout = () => {
     authService.logout();
     setAuthState({
@@ -170,7 +158,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     });
   };
 
-  // Fornece o contexto para os componentes filhos
   return (
     <AuthContext.Provider
       value={{
