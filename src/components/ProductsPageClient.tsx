@@ -115,8 +115,7 @@ export default function ProductsPageClient() {
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className="lg:w-64 space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-semibold mb-4">Filtros</h3>
-
+              <h3 className="text-lg font-semibold mb-4 text-black">Filtros</h3>
               <div className="space-y-4">
                 <div>
                   <label
