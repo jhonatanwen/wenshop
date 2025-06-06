@@ -173,7 +173,7 @@ const Footer: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-gray-300 text-sm">Email</p>
-                  <p className="text-white font-medium">contato@WenShop.com</p>
+                  <p className="text-white font-medium">contato@wenshop.com</p>
                 </div>
               </div>
 
